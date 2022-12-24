@@ -20,7 +20,7 @@ jobs:
           export PATH=$(pwd)/depot_tools:$PATH
 
       - name: Install deps
-      - run: |
+        run: |
           sudo ./build/install-build-deps.sh
           sudo ./flutter/build/install-build-deps-linux-desktop.sh
       
