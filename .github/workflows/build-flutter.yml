@@ -1,0 +1,40 @@
+name: Build Flutter
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: flutter/engine
+
+      - name: Setup Ninja
+        uses: ashutoshvarma/setup-ninja@master
+
+      - name: Initialize depot_tools
+        run: |
+          git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git --depth 1
+          export PATH=$(pwd)/depot_tools:$PATH
+
+      - name: Install deps
+      - run: |
+          sudo ./build/install-build-deps.sh
+          sudo ./flutter/build/install-build-deps-linux-desktop.sh
+      
+      - name: Update dependencies
+        run: gclient sync
+    
+      - name: Generate build files
+        run: ./flutter/tools/gn
+      
+      - name: Build
+        run: ninja -C out
+
+      - name: Archive and upload build artifacts
+        uses: RockLobster/archiving-upload-artifact@v0.2.1
+        with:
+          name: out-files
+          directory: out
