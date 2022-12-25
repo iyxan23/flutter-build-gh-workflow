@@ -46,7 +46,9 @@ jobs:
           ../depot_tools/gclient sync
 
       - name: Uninstall existing git to avoid conflict with git-svn's git dependency
-        run: sudo apt remove git
+        run: |
+          sudo apt remove git
+          sudo add-apt-repository --remove ppa:git-core/ppa
 
       - name: Install deps
         run: |
