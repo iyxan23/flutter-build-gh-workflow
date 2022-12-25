@@ -47,8 +47,8 @@ jobs:
 
       - name: Install deps
         run: |
-          yes | sudo engine/src/build/install-build-deps.sh
-          yes | sudo engine/src/flutter/build/install-build-deps-linux-desktop.sh
+          yes n | sudo engine/src/build/install-build-deps.sh
+          yes n | sudo engine/src/flutter/build/install-build-deps-linux-desktop.sh
     
       - name: Generate build files
         run: engine/flutter/tools/gn
