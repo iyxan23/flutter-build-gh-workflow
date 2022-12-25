@@ -45,6 +45,9 @@ jobs:
           cd engine
           ../depot_tools/gclient sync
 
+      - name: show tree
+        run: tree
+
       - name: Install deps
         run: |
           sudo engine/build/install-build-deps.sh
