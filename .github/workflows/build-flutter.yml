@@ -17,10 +17,9 @@ jobs:
       - name: Initialize depot_tools
         run: |
           git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git --depth 1
-          export PATH=$(pwd)/depot_tools:$PATH
 
       - name: Update dependencies
-        run: gclient sync
+        run: depot_tools/gclient sync
 
       - name: Install deps
         run: |
