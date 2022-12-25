@@ -19,13 +19,13 @@ jobs:
           git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git --depth 1
           export PATH=$(pwd)/depot_tools:$PATH
 
+      - name: Update dependencies
+        run: gclient sync
+
       - name: Install deps
         run: |
           sudo ./build/install-build-deps.sh
           sudo ./flutter/build/install-build-deps-linux-desktop.sh
-      
-      - name: Update dependencies
-        run: gclient sync
     
       - name: Generate build files
         run: ./flutter/tools/gn
