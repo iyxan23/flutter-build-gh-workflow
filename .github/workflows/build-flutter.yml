@@ -7,9 +7,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          repository: flutter/engine
+      #- uses: actions/checkout@v3
+      #  with:
+      #    repository: flutter/engine
 
       - name: Setup Ninja
         uses: ashutoshvarma/setup-ninja@master
@@ -18,16 +18,34 @@ jobs:
         run: |
           git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git --depth 1
 
+      - name: Configure gclient
+        run: |
+          mkdir engine
+          cat <<- EOF > engine/.gclient
+          solutions = [
+            {
+              "managed": False,
+              "name": "src/flutter",
+              "url": "git@github.com:flutter/engine.git",
+              "custom_deps": {},
+              "deps_file": "DEPS",
+              "safesync_url": "",
+            },
+          ]
+          EOF
+
       - name: Update dependencies
-        run: depot_tools/gclient sync
+        run: |
+          cd engine
+          ../depot_tools/gclient sync
 
       - name: Install deps
         run: |
-          sudo ./build/install-build-deps.sh
-          sudo ./flutter/build/install-build-deps-linux-desktop.sh
+          sudo engine/build/install-build-deps.sh
+          sudo engine/flutter/build/install-build-deps-linux-desktop.sh
     
       - name: Generate build files
-        run: ./flutter/tools/gn
+        run: engine/flutter/tools/gn
       
       - name: Build
         run: ninja -C out
