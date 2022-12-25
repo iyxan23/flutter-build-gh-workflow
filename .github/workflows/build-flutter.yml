@@ -45,13 +45,10 @@ jobs:
           cd engine
           ../depot_tools/gclient sync
 
-      - name: show tree
-        run: tree
-
       - name: Install deps
         run: |
-          sudo engine/build/install-build-deps.sh
-          sudo engine/flutter/build/install-build-deps-linux-desktop.sh
+          sudo engine/src/build/install-build-deps.sh
+          sudo engine/src/flutter/build/install-build-deps-linux-desktop.sh
     
       - name: Generate build files
         run: engine/flutter/tools/gn
