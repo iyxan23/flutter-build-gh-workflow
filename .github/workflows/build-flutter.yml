@@ -11,6 +11,11 @@ jobs:
       #  with:
       #    repository: flutter/engine
 
+      - name: Import SSH Key
+        uses: shimataro/ssh-key-action@v2.5.0
+        with:
+          key: ${{ secrets.SSH_KEY }}
+
       - name: Setup Ninja
         uses: ashutoshvarma/setup-ninja@master
 
@@ -26,7 +31,7 @@ jobs:
             {
               "managed": False,
               "name": "src/flutter",
-              "url": "github.com/Iyxan23/flutter-engine",
+              "url": "git@github:Iyxan23/flutter-engine.git",
               "custom_deps": {},
               "deps_file": "DEPS",
               "safesync_url": "",
