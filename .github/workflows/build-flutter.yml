@@ -45,6 +45,9 @@ jobs:
           cd engine
           ../depot_tools/gclient sync
 
+      - name: Uninstall existing git to avoid conflict with git-svn's git dependency
+        run: sudo apt remove git
+
       - name: Install deps
         run: |
           yes n | sudo engine/src/build/install-build-deps.sh
